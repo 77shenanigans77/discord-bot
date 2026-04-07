@@ -1,4 +1,0 @@
-[build]
-cmd = "pip install -r requirements.txt"
-
-start = "python bot_main.py"
