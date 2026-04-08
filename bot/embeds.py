@@ -18,21 +18,33 @@ def build_script_embed(script: dict) -> discord.Embed:
 
     key_command_text = script.get("key_command") or "Not set"
     updated_text = script.get("updated_date") or now_date_string()
+    game_text = script.get("game_name") or "Not set"
+    summary_text = script.get("summary") or "No summary set."
+
+    description = (
+        f"{summary_text}\n\n"
+        f"**Game**\n"
+        f"{game_text}\n\n"
+        f"**Current Status**\n"
+        f"{cfg['icon']} {cfg['label']}\n\n"
+        f"**Last Updated**\n"
+        f"{updated_text}\n\n"
+        f"**Loader**\n"
+        f"{loader_block}\n"
+        f"**Supported Executors**\n"
+        f"{executors_text}\n\n"
+        f"**Key Command**\n"
+        f"{key_command_text}\n\n"
+        f"**Bug Reports**\n"
+        f"{bug_channel_text}"
+    )
 
     embed = discord.Embed(
         title=script.get("name") or "Unnamed Script",
-        description=script.get("summary") or "No summary set.",
+        description=description,
         color=color,
         timestamp=utc_now(),
     )
-
-    embed.add_field(name="Game", value=script.get("game_name") or "Not set", inline=False)
-    embed.add_field(name="Current Status", value=f"{cfg['icon']} {cfg['label']}", inline=False)
-    embed.add_field(name="Last Updated", value=updated_text, inline=False)
-    embed.add_field(name="Loader", value=loader_block, inline=False)
-    embed.add_field(name="Supported Executors", value=executors_text, inline=False)
-    embed.add_field(name="Key Command", value=key_command_text, inline=False)
-    embed.add_field(name="Bug Reports", value=bug_channel_text, inline=False)
 
     if script.get("notes"):
         embed.add_field(name="Notes", value=script["notes"], inline=False)
