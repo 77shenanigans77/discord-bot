@@ -19,7 +19,7 @@ def build_script_embed(script: dict) -> discord.Embed:
     key_command_text = script.get("key_command") or "Not set"
     updated_text = script.get("updated_date") or now_date_string()
     game_text = script.get("game_name") or "Not set"
-    summary_text = script.get("summary") or "No summary set."
+    summary_text = (script.get("summary") or "No summary set.").replace("|", "\n").strip()
 
     description = (
         f"{summary_text}\n\n"
@@ -47,7 +47,8 @@ def build_script_embed(script: dict) -> discord.Embed:
     )
 
     if script.get("notes"):
-        embed.add_field(name="Notes", value=script["notes"], inline=False)
+        notes_text = script["notes"].replace("|", "\n").strip()
+        embed.add_field(name="Notes", value=notes_text, inline=False)
 
     thumb = script.get("style_thumbnail_url") or ""
     image = script.get("style_image_url") or ""
