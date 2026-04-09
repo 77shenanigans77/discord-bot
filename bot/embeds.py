@@ -62,10 +62,12 @@ def build_script_embed(script: dict) -> discord.Embed:
 
 
 def build_changelog_embed(data: dict) -> discord.Embed:
+    summary_text = (data.get("summary") or "").replace("|", "\n").strip()
+
     embed = discord.Embed(
         title=data["script_name"],
         description=f"**{data['version_from']} → {data['version_to']}**"
-        + (f"\n\n{data['summary']}" if data.get("summary") else ""),
+        + (f"\n\n{summary_text}" if summary_text else ""),
         color=0x5865F2,
         timestamp=utc_now(),
     )
